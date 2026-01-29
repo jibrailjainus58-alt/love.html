@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Question Game</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+        main {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .btn-container {
+            margin-top: 50px;
+            position: relative;
+            min-height: 300px;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: absolute;
+        }
+        .yes {
+            background: #ff4d6d;
+            color: white;
+            z-index: 20;
+            transform: translate(-80px, 0); 
+        }
+        .no {
+            background: #555;
+            color: white;
+            z-index: 10;
+            transform: translate(80px, 0);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="myAudio" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+
+    <main>
+        <h1 id="question">Mau Jadi Pacarku?</h1>
+        <div class="btn-container">
+            <button class="yes" id="btnYes" onclick="terimaKasih()">Mau</button>
+            <button class="no" id="btnNo">Enggak</button>
+        </div>
+    </main>
+
+    <script>
+        const btnNo = document.getElementById('btnNo');
+        const btnYes = document.getElementById('btnYes');
+        const audio = document.getElementById('myAudio');
+        
+        let fontSize = 18;
+        let paddingY = 10;
+        let paddingX = 25;
+
+        btnNo.addEventListener('click', () => {
+            fontSize += 15; 
+            paddingY += 10;
+            paddingX += 20;
+            btnYes.style.fontSize = fontSize + 'px';
+            btnYes.style.padding = `${paddingY}px ${paddingX}px`;
+
+            // Efek lari tombol No
+            const randomX = Math.floor(Math.random() * 300) - 150;
+            const randomY = Math.floor(Math.random() * 200) - 100;
+            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            const messages = ["Yakin?", "Ehh kok gitu?", "Mikir dulu...", "Gak bisa lepas!", "I'll be That Somebody for you!"];
+            document.getElementById('question').innerText = messages[Math.floor(Math.random() * messages.length)];
+        });
+
+        function terimaKasih() {
+            // Memainkan lagu saat tombol diklik (wajib di iPhone)
+            audio.play().catch(e => {
+                console.log("Audio play diblokir browser, pastikan file musik.mp3 ada.");
+            });
+            
+            alert('I Love You Too! ❤️ Musik dimainkan!');
+            document.getElementById('question').innerText = "Yeee! I Love You! ❤️";
+            btnNo.style.display = 'none';
+            btnYes.style.transform = 'translate(0, 0)';
+        }
+    </script>
+
+</body>
+</html>
