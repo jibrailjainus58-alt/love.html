@@ -17,42 +17,33 @@
             overflow: hidden;
         }
         
-        /* Layar Awal untuk mengaktifkan musik */
+        /* Tampilan Awal (Tombol Play) */
         #overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #111;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
         }
-
         .start-btn {
-            padding: 15px 40px;
+            padding: 15px 30px;
             font-size: 20px;
             background: #ff4d6d;
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 0 25px rgba(255, 77, 109, 0.6);
-            transition: transform 0.2s;
-        }
-
-        .start-btn:active {
-            transform: scale(0.9);
+            box-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
         }
 
         main {
             text-align: center;
             position: relative;
             z-index: 10;
-            display: none; /* Sembunyi sampai tombol mulai diklik */
+            display: none; /* Sembunyikan soal di awal */
         }
-
         .btn-container {
             margin-top: 50px;
             position: relative;
@@ -62,7 +53,6 @@
             justify-content: center;
             align-items: center;
         }
-
         button {
             padding: 10px 25px;
             font-size: 18px;
@@ -72,32 +62,24 @@
             transition: all 0.2s ease;
             position: absolute;
         }
-
         .yes {
             background: #ff4d6d;
             color: white;
             z-index: 20;
             transform: translate(-80px, 0); 
         }
-
         .no {
             background: #555;
             color: white;
             z-index: 10;
             transform: translate(80px, 0);
         }
-
-        h1 {
-            padding: 0 20px;
-            line-height: 1.4;
-        }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <h2 style="margin-bottom: 20px;">Halo! Ada pesan buat kamu...</h2>
-        <button class="start-btn" onclick="mulaiWeb()">Buka Pesan ❤️</button>
+        <button class="start-btn" onclick="mulaiSekarang()">Klik untuk Mulai ❤️</button>
     </div>
 
     <audio id="myAudio" loop>
@@ -123,17 +105,13 @@
         let paddingY = 10;
         let paddingX = 25;
 
-        // Fungsi saat tombol "Buka Pesan" diklik
-        function mulaiWeb() {
-            // Memulai audio (Penting: harus dipicu klik user agar bunyi di HP)
-            audio.play().catch(e => console.log("Musik butuh interaksi"));
-            
-            // Hilangkan overlay dan tampilkan konten utama
-            overlay.style.display = 'none';
-            mainContent.style.display = 'block';
+        // Fungsi untuk memulai lagu dan menampilkan soal
+        function mulaiSekarang() {
+            audio.play().catch(e => console.log("Musik butuh klik user"));
+            overlay.style.display = 'none'; // Sembunyikan tombol start
+            mainContent.style.display = 'block'; // Tampilkan soal cinta
         }
 
-        // Logika tombol "Enggak"
         btnNo.addEventListener('click', () => {
             fontSize += 15; 
             paddingY += 10;
@@ -145,18 +123,15 @@
             const randomY = Math.floor(Math.random() * 200) - 100;
             btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
 
-            const messages = ["Yakin?", "Pikir dulu...", "Gak bisa lepas!", "Tombol 'Mau' makin gede loh", "I'll be That Somebody for you!"];
+            const messages = ["Yakin?", "Ehh kok gitu?", "Mikir dulu...", "Gak bisa lepas!", "I'll be That Somebody for you!"];
             document.getElementById('question').innerText = messages[Math.floor(Math.random() * messages.length)];
         });
 
-        // Logika saat "Mau" diklik
         function terimaKasih() {
             alert('I Love You Too! ❤️');
             document.getElementById('question').innerText = "Yeee! I Love You! ❤️";
             btnNo.style.display = 'none';
             btnYes.style.transform = 'translate(0, 0)';
-            btnYes.style.fontSize = '24px';
-            btnYes.style.padding = '15px 30px';
         }
     </script>
 
