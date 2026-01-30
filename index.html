@@ -1,13 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>I Love You</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <!-- original creator github:rheinatamara -->
-  </body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #ffafbd, #ffc3a0); /* Pink soft estetik */
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        h1 { color: #d63384; font-size: 1.5rem; }
+
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .yes-btn { background: #ff4d6d; color: white; }
+        .no-btn { background: #6c757d; color: white; position: absolute; }
+
+        .start-btn {
+            background: #ff4d6d;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <h2 style="color: #ff4d6d;">Ada surat untukmu...</h2>
+        <button class="start-btn" onclick="mulai()">Buka Surat ❤️</button>
+    </div>
+
+    <audio id="lagu" loop>
+        <source src="musik.mp3.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card" id="mainContent" style="display:none;">
+        <h1 id="text">Mau Jadi Pacarku?</h1>
+        <div class="btn-container">
+            <button class="yes-btn" id="btnYes" onclick="diterima()">Mau</button>
+            <button class="no-btn" id="btnNo">Enggak</button>
+        </div>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btnNo');
+        const btnYes = document.getElementById('btnYes');
+        const lagu = document.getElementById('lagu');
+        
+        function mulai() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            lagu.play().catch(e => console.log("Musik butuh interaksi"));
+        }
+
+        btnNo.addEventListener('touchstart', lari);
+        btnNo.addEventListener('mouseover', lari);
+
+        function lari() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+        }
+
+        function diterima() {
+            document.getElementById('text').innerHTML = "I Love You Too! ❤️";
+            btnNo.style.display = 'none';
+            btnYes.style.transform = 'scale(1.5)';
+            alert("Yeayy! Kabari aku ya! 😘");
+        }
+    </script>
+</body>
 </html>
